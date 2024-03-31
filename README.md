@@ -20,5 +20,5 @@ The current parser evaluates using order of operations. The current supported op
 * Division (/)
 * Parentheses
 
- #Road Map
+ # Road Map
  In the future, I plan to add support for more advanced operations such as square root, sine, cosine, tangant, and other mathamatical functions. Variable support is also planned.
