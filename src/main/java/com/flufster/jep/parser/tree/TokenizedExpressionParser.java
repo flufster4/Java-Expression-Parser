@@ -30,12 +30,11 @@ public class TokenizedExpressionParser {
                 operation = findOperation(token);
 
                 try {
-                    if (tokenizedExpression.get(i+3).toCharArray()[0] == '(')
-                        evaluateParentheses(i + 3);
-
                     if (tokenizedExpression.get(i+1).toCharArray()[0] == '(')
                         evaluateParentheses(i + 1);
 
+                    if (tokenizedExpression.get(i+3).toCharArray()[0] == '(')
+                        evaluateParentheses(i + 3);
 
                     if (findOperation(tokenizedExpression.get(i+2)).getPriority() > operation.getPriority()) {
                         Double op1 = Double.valueOf(tokenizedExpression.get(i + 1));
@@ -56,7 +55,6 @@ public class TokenizedExpressionParser {
                 } catch (IndexOutOfBoundsException e) {
 //                    System.out.println(Arrays.toString(e.getStackTrace()));
                 }
-
                 Double operand1 = Double.valueOf(tokenizedExpression.get(i - 1));
                 Double operand2 = Double.valueOf(tokenizedExpression.get(i + 1));
 

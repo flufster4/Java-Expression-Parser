@@ -52,9 +52,19 @@ public class ExpressionTokenizer {
                     parenthesesBuilder.append(parenthesesContentCharacter);
                     expressionCharList.remove(i);
                     parenthesesContentCharacter = expressionCharList.get(i);
-
                 }
-                parenthesesBuilder.append(')');
+
+                try {
+                    while (true) {
+                        if (expressionCharList.get(i).equals(')')) {
+                            parenthesesBuilder.append(')');
+                            expressionCharList.remove(i);
+                            continue;
+                        }
+                        break;
+                    }
+                } catch (IndexOutOfBoundsException ignore) {}
+
                 result.add(parenthesesBuilder.toString());
                 i--;
             }
