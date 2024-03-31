@@ -1,8 +1,8 @@
 package com.flufster.jep.parser.tree;
 
+import com.flufster.jep.math.Operation;
 import com.flufster.jep.parser.token.NumberToken;
 import com.flufster.jep.parser.token.OperationToken;
-import com.flufster.jep.math.Operation;
 
 import java.util.List;
 
@@ -23,18 +23,26 @@ public class TokenizedExpressionParser {
 
             if (token.matches(operationRegex)) {
                 Operation operation;
-//                Operation operation2;
                 operation = findOperation(token);
 
-                //Order of operations
-//                try {
-//                    String op2 = tokenizedExpression.get(i + 2);
-//                    operation2 = findOperation(op2);
-//                    if (operation2.getPriority() > operation.getPriority())
-//                        continue;
-//                } catch (Exception e) {
-//                    System.out.println(Arrays.toString(e.getStackTrace()));
-//                }
+                try {
+                    if (findOperation(tokenizedExpression.get(i+2)).getPriority() > operation.getPriority()) {
+                        Double op1 = Double.valueOf(tokenizedExpression.get(i + 1));
+                        Double op2 = Double.valueOf(tokenizedExpression.get(i + 3));
+
+                        Node resultNode = new Node(
+                                new OperationToken(findOperation(tokenizedExpression.get(i+2))),
+                                new Node(new NumberToken(op1)),
+                                new Node(new NumberToken(op2))
+                        );
+                        resultNode.getToken().execute(resultNode.getLeft(), resultNode.getRight());
+
+                        tokenizedExpression.remove(i + 1);
+                        tokenizedExpression.remove(i + 1);
+                        tokenizedExpression.remove(i + 1);
+                        tokenizedExpression.add(i + 1, resultNode.getToken().value().toString());
+                    }
+                } catch (Exception ignore) {}
 
                 Double operand1 = Double.valueOf(tokenizedExpression.get(i - 1));
                 Double operand2 = Double.valueOf(tokenizedExpression.get(i + 1));
@@ -54,6 +62,7 @@ public class TokenizedExpressionParser {
                             new Node(new NumberToken(operand2))
                     );
                 }
+
             }
         }
 
