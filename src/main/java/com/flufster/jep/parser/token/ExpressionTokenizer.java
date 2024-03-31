@@ -69,7 +69,6 @@ public class ExpressionTokenizer {
                 i--;
             }
 
-
         }
         if (!workingToken.isEmpty())
             result.add(workingToken.toString());

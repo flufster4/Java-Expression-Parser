@@ -22,6 +22,13 @@ public class TokenizedExpressionParser {
         for (int i = 0; i < tokenizedExpression.size(); i++) {
             String token = tokenizedExpression.get(i);
 
+            if (tokenizedExpression.size() == 1)
+                return new Node(
+                        new OperationToken(Operation.ADDITION),
+                        new Node(new NumberToken(Double.valueOf(tokenizedExpression.get(0)))),
+                        new Node(new NumberToken(0d))
+                );
+
             if (token.toCharArray()[0] == '(')
                 evaluateParentheses(i);
 

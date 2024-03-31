@@ -14,10 +14,14 @@ public class Expression {
 
     public Double evaluate() {
         ExpressionTokenizer tokenizer = new ExpressionTokenizer(expression);
-        TokenizedExpressionParser parser = new TokenizedExpressionParser(tokenizer.tokenize());
-        Node tree = parser.parse();
-        tree.getToken().execute(tree.getLeft(), tree.getRight());
-        return tree.getToken().value();
+        try {
+            TokenizedExpressionParser parser = new TokenizedExpressionParser(tokenizer.tokenize());
+            Node tree = parser.parse();
+            tree.getToken().execute(tree.getLeft(), tree.getRight());
+            return tree.getToken().value();
+        } catch (Exception e) {
+            throw new ExpressionFormatException("Invalid expression!");
+        }
     }
 
 
