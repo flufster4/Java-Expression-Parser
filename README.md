@@ -3,6 +3,7 @@ A simple java library for parsing string mathematical expressions.
 
 # Download
 [![](https://jitpack.io/v/flufster4/Java-Expression-Parser.svg)](https://jitpack.io/#flufster4/Java-Expression-Parser)
+
 Download the lastest jar, or use a build system like maven or gradle.
 
 ## Maven
