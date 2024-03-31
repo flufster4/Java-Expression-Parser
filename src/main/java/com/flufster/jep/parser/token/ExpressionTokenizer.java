@@ -13,24 +13,56 @@ public class ExpressionTokenizer {
 
     public List<String> tokenize() {
         StringBuilder workingToken = new StringBuilder();
-        String numberRegex = "[0-9.]";
-        String operationRegex = "[+\\-*/]";
         List<String> result = new ArrayList<>();
 
-        for (char workingCharacter : expression.toCharArray()) {
+        String numberRegex = "[0-9.]";
+        String operationRegex = "[+\\-*/]";
+
+        char[] expressionCharArray = expression.toCharArray();
+        List<Character> expressionCharList = new ArrayList<>();
+        for ( char character : expressionCharArray )
+            expressionCharList.add(character);
+
+        for (int i = 0; i < expressionCharList.size(); i++) {
+            Character workingCharacter = expressionCharList.get(i);
             String workingCharecterString = Character.toString(workingCharacter);
 
             if (workingCharecterString.matches(numberRegex))
                 workingToken.append(workingCharacter);
 
             if (workingCharecterString.matches(operationRegex)) {
-                result.add(workingToken.toString());
+                if (!workingToken.isEmpty()) {
+                    result.add(workingToken.toString());
+                    workingToken.setLength(0);
+                }
                 result.add(String.valueOf(workingCharacter));
-                workingToken.setLength(0);
             }
 
+            if (workingCharecterString.equals("(")) {
+                if (!workingToken.isEmpty()) {
+                    result.add(workingToken.toString());
+                    result.add("*");
+                    workingToken.setLength(0);
+                }
+
+                Character parenthesesContentCharacter = expressionCharList.get(i);
+                StringBuilder parenthesesBuilder = new StringBuilder();
+
+                while (!parenthesesContentCharacter.equals(')')) {
+                    parenthesesBuilder.append(parenthesesContentCharacter);
+                    expressionCharList.remove(i);
+                    parenthesesContentCharacter = expressionCharList.get(i);
+
+                }
+                parenthesesBuilder.append(')');
+                result.add(parenthesesBuilder.toString());
+                i--;
+            }
+
+
         }
-        result.add(workingToken.toString());
+        if (!workingToken.isEmpty())
+            result.add(workingToken.toString());
 
         return result;
     }

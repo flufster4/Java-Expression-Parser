@@ -1,6 +1,7 @@
 package com.flufster.jep.parser.tree;
 
 import com.flufster.jep.math.Operation;
+import com.flufster.jep.parser.token.ExpressionTokenizer;
 import com.flufster.jep.parser.token.NumberToken;
 import com.flufster.jep.parser.token.OperationToken;
 
@@ -21,11 +22,21 @@ public class TokenizedExpressionParser {
         for (int i = 0; i < tokenizedExpression.size(); i++) {
             String token = tokenizedExpression.get(i);
 
+            if (token.toCharArray()[0] == '(')
+                evaluateParentheses(i);
+
             if (token.matches(operationRegex)) {
                 Operation operation;
                 operation = findOperation(token);
 
                 try {
+                    if (tokenizedExpression.get(i+3).toCharArray()[0] == '(')
+                        evaluateParentheses(i + 3);
+
+                    if (tokenizedExpression.get(i+1).toCharArray()[0] == '(')
+                        evaluateParentheses(i + 1);
+
+
                     if (findOperation(tokenizedExpression.get(i+2)).getPriority() > operation.getPriority()) {
                         Double op1 = Double.valueOf(tokenizedExpression.get(i + 1));
                         Double op2 = Double.valueOf(tokenizedExpression.get(i + 3));
@@ -42,7 +53,9 @@ public class TokenizedExpressionParser {
                         tokenizedExpression.remove(i + 1);
                         tokenizedExpression.add(i + 1, resultNode.getToken().value().toString());
                     }
-                } catch (Exception ignore) {}
+                } catch (IndexOutOfBoundsException e) {
+//                    System.out.println(Arrays.toString(e.getStackTrace()));
+                }
 
                 Double operand1 = Double.valueOf(tokenizedExpression.get(i - 1));
                 Double operand2 = Double.valueOf(tokenizedExpression.get(i + 1));
@@ -74,5 +87,24 @@ public class TokenizedExpressionParser {
             if (op.getOperation().equals(operation))
                 return op;
         return null;
+    }
+
+    private Double parseParentheses(int index) {
+        String parentheses = tokenizedExpression.get(index);
+        if (parentheses.length() >= 2) {
+            parentheses = parentheses.substring(1);
+            parentheses = parentheses.substring(0, parentheses.length() - 1);
+        }
+        ExpressionTokenizer tokenizer = new ExpressionTokenizer(parentheses);
+        TokenizedExpressionParser parser = new TokenizedExpressionParser(tokenizer.tokenize());
+        Node parenthesesTree = parser.parse();
+        parenthesesTree.getToken().execute(parenthesesTree.getLeft(), parenthesesTree.getRight());
+        return parenthesesTree.getToken().value();
+    }
+
+    private void evaluateParentheses(int index) {
+        Double parenthesesValue = parseParentheses(index);
+        tokenizedExpression.remove(index);
+        tokenizedExpression.add(index, parenthesesValue.toString());
     }
 }
