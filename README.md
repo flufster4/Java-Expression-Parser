@@ -2,7 +2,7 @@
 A simple java library for parsing string mathematical expressions. 
 
 # Download
-Maven soon.
+Download the lastest release.
 
 # Usage
 Java Expression Parser (JEP) aims to provide speed and ease of use. Due to this, invokation of the library is incredably simple. All you need to do is instanciate the `Expression` class and pass your expression as the paramater. Then, to evaluate it, you simply call `Expression#evaluate`. For example,
