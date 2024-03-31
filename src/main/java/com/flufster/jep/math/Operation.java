@@ -8,7 +8,8 @@ public enum Operation {
     ADDITION(0, "+"),
     SUBTRACTION(0, "-"),
     MULTIPLICATION(1, "*"),
-    DIVISION(1, "/");
+    DIVISION(1, "/"),
+    EXPONENT(2, "^");
 
     private final int priority;
     private final String operation;

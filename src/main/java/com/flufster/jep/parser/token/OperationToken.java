@@ -37,6 +37,9 @@ public class OperationToken implements Token {
             case DIVISION:
                 value = x / y;
                 break;
+            case EXPONENT:
+                value = Math.pow(x, y);
+                break;
         }
     }
 

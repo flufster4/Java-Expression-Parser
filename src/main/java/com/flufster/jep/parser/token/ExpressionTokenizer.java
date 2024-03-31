@@ -16,7 +16,7 @@ public class ExpressionTokenizer {
         List<String> result = new ArrayList<>();
 
         String numberRegex = "[0-9.]";
-        String operationRegex = "[+\\-*/]";
+        String operationRegex = "[+\\-*/^]";
 
         char[] expressionCharArray = expression.toCharArray();
         List<Character> expressionCharList = new ArrayList<>();

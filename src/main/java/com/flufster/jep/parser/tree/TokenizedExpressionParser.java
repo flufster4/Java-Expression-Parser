@@ -17,7 +17,7 @@ public class TokenizedExpressionParser {
 
     public Node parse() {
         Node result = null;
-        String operationRegex = "[+\\-*/]";
+        String operationRegex = "[+\\-*/^]";
 
         for (int i = 0; i < tokenizedExpression.size(); i++) {
             String token = tokenizedExpression.get(i);
@@ -37,31 +37,22 @@ public class TokenizedExpressionParser {
                 operation = findOperation(token);
 
                 try {
-                    if (tokenizedExpression.get(i+1).toCharArray()[0] == '(')
+                    if (tokenizedExpression.get(i + 1).toCharArray()[0] == '(')
                         evaluateParentheses(i + 1);
 
-                    if (tokenizedExpression.get(i+3).toCharArray()[0] == '(')
+                    if (tokenizedExpression.get(i + 3).toCharArray()[0] == '(')
                         evaluateParentheses(i + 3);
 
-                    if (findOperation(tokenizedExpression.get(i+2)).getPriority() > operation.getPriority()) {
-                        Double op1 = Double.valueOf(tokenizedExpression.get(i + 1));
-                        Double op2 = Double.valueOf(tokenizedExpression.get(i + 3));
-
-                        Node resultNode = new Node(
-                                new OperationToken(findOperation(tokenizedExpression.get(i+2))),
-                                new Node(new NumberToken(op1)),
-                                new Node(new NumberToken(op2))
-                        );
-                        resultNode.getToken().execute(resultNode.getLeft(), resultNode.getRight());
-
-                        tokenizedExpression.remove(i + 1);
-                        tokenizedExpression.remove(i + 1);
-                        tokenizedExpression.remove(i + 1);
-                        tokenizedExpression.add(i + 1, resultNode.getToken().value().toString());
+                    Operation secondOperation = findOperation(tokenizedExpression.get(i + 2));
+                    if (secondOperation.getPriority() > operation.getPriority()) {
+                        try {
+                            if (findOperation(tokenizedExpression.get(i + 4)).getPriority() > secondOperation.getPriority())
+                                solveHigherOperation(i + 4);
+                        } catch (IndexOutOfBoundsException ignore) {}
+                        solveHigherOperation(i + 2);
                     }
-                } catch (IndexOutOfBoundsException e) {
-//                    System.out.println(Arrays.toString(e.getStackTrace()));
-                }
+                } catch (IndexOutOfBoundsException ignore) {}
+
                 Double operand1 = Double.valueOf(tokenizedExpression.get(i - 1));
                 Double operand2 = Double.valueOf(tokenizedExpression.get(i + 1));
 
@@ -91,7 +82,7 @@ public class TokenizedExpressionParser {
         for (Operation op : Operation.values())
             if (op.getOperation().equals(operation))
                 return op;
-        return null;
+        return Operation.ADDITION;
     }
 
     private Double parseParentheses(int index) {
@@ -111,5 +102,23 @@ public class TokenizedExpressionParser {
         Double parenthesesValue = parseParentheses(index);
         tokenizedExpression.remove(index);
         tokenizedExpression.add(index, parenthesesValue.toString());
+    }
+
+    private void solveHigherOperation(int operationIndex) {
+        Double op1 = Double.valueOf(tokenizedExpression.get(operationIndex - 1));
+        Double op2 = Double.valueOf(tokenizedExpression.get(operationIndex + 1));
+
+        Node resultNode = new Node(
+                new OperationToken(findOperation(tokenizedExpression.get(operationIndex))),
+                new Node(new NumberToken(op1)),
+                new Node(new NumberToken(op2))
+        );
+        resultNode.getToken().execute(resultNode.getLeft(), resultNode.getRight());
+
+        int op1Location = operationIndex - 1;
+        tokenizedExpression.remove(op1Location);
+        tokenizedExpression.remove(op1Location);
+        tokenizedExpression.remove(op1Location);
+        tokenizedExpression.add(op1Location, resultNode.getToken().value().toString());
     }
 }

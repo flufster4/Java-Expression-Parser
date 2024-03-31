@@ -8,6 +8,8 @@
     <artifactId>jep</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <name>Java Expression Parser</name>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
