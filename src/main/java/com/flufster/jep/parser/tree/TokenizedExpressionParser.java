@@ -1,5 +1,6 @@
 package com.flufster.jep.parser.tree;
 
+import com.flufster.jep.ExpressionFormatException;
 import com.flufster.jep.math.Operation;
 import com.flufster.jep.parser.token.ExpressionTokenizer;
 import com.flufster.jep.parser.token.NumberToken;
@@ -33,8 +34,7 @@ public class TokenizedExpressionParser {
                 evaluateParentheses(i);
 
             if (token.matches(operationRegex)) {
-                Operation operation;
-                operation = findOperation(token);
+                Operation operation = findOperation(token);
 
                 try {
                     if (tokenizedExpression.get(i + 1).toCharArray()[0] == '(')
@@ -87,14 +87,17 @@ public class TokenizedExpressionParser {
 
     private Double parseParentheses(int index) {
         String parentheses = tokenizedExpression.get(index);
-        if (parentheses.length() >= 2) {
-            parentheses = parentheses.substring(1);
-            parentheses = parentheses.substring(0, parentheses.length() - 1);
-        }
+        if (!(parentheses.length() >= 2))
+            throw new ExpressionFormatException("Invalid parentheses.");
+
+        parentheses = parentheses.substring(1);
+        parentheses = parentheses.substring(0, parentheses.length() - 1);
+
         ExpressionTokenizer tokenizer = new ExpressionTokenizer(parentheses);
         TokenizedExpressionParser parser = new TokenizedExpressionParser(tokenizer.tokenize());
         Node parenthesesTree = parser.parse();
         parenthesesTree.getToken().execute(parenthesesTree.getLeft(), parenthesesTree.getRight());
+
         return parenthesesTree.getToken().value();
     }
 
