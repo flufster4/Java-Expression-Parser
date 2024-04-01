@@ -19,7 +19,7 @@ to your repositories and
 <dependency>
   <groupId>com.github.flufster4</groupId>
   <artifactId>Java-Expression-Parser</artifactId>
-  <version>v1.0.0</version>
+  <version>TAG</version>
 </dependency>
 ```
 to your dependencies.
@@ -38,7 +38,7 @@ dependencyResolutionManagement {
 to the end of your repositories, and then add the following dependency,
 ```
 dependencies {
-  implementation 'com.github.flufster4:Java-Expression-Parser:Tag'
+  implementation 'com.github.flufster4:Java-Expression-Parser:TAG'
 }
 ```
 
@@ -56,6 +56,7 @@ The current parser evaluates using order of operations. The current supported op
 * Subtraction (-)
 * Multiplication (*)
 * Division (/)
+* Exponents (^)
 * Parentheses
 
  # Road Map
