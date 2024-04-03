@@ -45,7 +45,7 @@ public class ExpressionTokenizer {
                     workingToken.setLength(0);
                 }
 
-                Character parenthesesContentCharacter = expressionCharList.get(i);
+                Character parenthesesContentCharacter = workingCharacter;
                 StringBuilder parenthesesBuilder = new StringBuilder();
 
                 while (!parenthesesContentCharacter.equals(')')) {
@@ -55,13 +55,9 @@ public class ExpressionTokenizer {
                 }
 
                 try {
-                    while (true) {
-                        if (expressionCharList.get(i).equals(')')) {
-                            parenthesesBuilder.append(')');
-                            expressionCharList.remove(i);
-                            continue;
-                        }
-                        break;
+                    while (expressionCharList.get(i).equals(')')) {
+                        parenthesesBuilder.append(')');
+                        expressionCharList.remove(i);
                     }
                 } catch (IndexOutOfBoundsException ignore) {}
 
