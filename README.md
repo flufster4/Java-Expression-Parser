@@ -51,7 +51,7 @@ System.out.println(result);
 ```
 
 ## Operations
-The current parser evaluates using order of operations. The current supported operations are:
+The current parser evaluates using order of operations (PEMDAS). The current supported operations are:
 * Addition (+)
 * Subtraction (-)
 * Multiplication (*)
