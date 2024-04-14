@@ -59,5 +59,5 @@ The current parser evaluates using order of operations (PEMDAS). The current sup
 * Exponents (^)
 * Parentheses
 
- # Road Map
- In the future, I plan to add support for more advanced operations such as square root, sine, cosine, tangant, and other mathamatical functions. Variable support is also planned.
+### Advanced Operations/Functions
+Documentation on function support can be found [here](doc/advancedops.md)

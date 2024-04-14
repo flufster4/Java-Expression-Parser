@@ -1,5 +1,6 @@
 package com.flufster.jep.math;
 
+import com.flufster.jep.math.advanced.MiscSolver;
 import com.flufster.jep.math.advanced.TrigSolver;
 
 import java.util.ArrayList;
@@ -21,5 +22,6 @@ public class AdvancedOperations {
 
     public AdvancedOperations() {
         solvers.add(new TrigSolver());
+        solvers.add(new MiscSolver());
     }
 }

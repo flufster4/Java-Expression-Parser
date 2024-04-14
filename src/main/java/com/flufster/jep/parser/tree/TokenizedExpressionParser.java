@@ -95,7 +95,6 @@ public class TokenizedExpressionParser {
         try {
             if (tokenizedExpression.get(index + 1).charAt(0) == '(')
                 evaluateParentheses(index + 1);
-            System.out.println(tokenizedExpression.get(index + 1));
             Double result = advancedOperations.evaluateOperation(tokenizedExpression.get(index), Double.valueOf(tokenizedExpression.get(index + 1)));
             tokenizedExpression.remove(index);
             tokenizedExpression.remove(index);
