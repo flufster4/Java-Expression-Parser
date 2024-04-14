@@ -2,6 +2,7 @@ package com.flufster.jep.parser.tree;
 
 import com.flufster.jep.Expression;
 import com.flufster.jep.ExpressionFormatException;
+import com.flufster.jep.math.AdvancedOperations;
 import com.flufster.jep.math.Operation;
 import com.flufster.jep.parser.token.ExpressionTokenizer;
 import com.flufster.jep.parser.token.NumberToken;
@@ -12,9 +13,11 @@ import java.util.List;
 public class TokenizedExpressionParser {
 
     private final List<String> tokenizedExpression;
+    private final AdvancedOperations advancedOperations;
 
     public TokenizedExpressionParser(List<String> tokenizedExpression) {
         this.tokenizedExpression = tokenizedExpression;
+        this.advancedOperations = new AdvancedOperations();
     }
 
     public Node parse() {
@@ -32,6 +35,16 @@ public class TokenizedExpressionParser {
 
             if (token.charAt(0) == '(')
                 evaluateParentheses(i);
+
+            if (((Character)token.charAt(0)).toString().matches(ExpressionTokenizer.advancedOperationRegex))
+                evaluateAdvancedOperation(i);
+
+            if (tokenizedExpression.size() == 1)
+                return new Node(
+                        new OperationToken(Operation.ADDITION),
+                        new Node(new NumberToken(Double.valueOf(tokenizedExpression.get(0)))),
+                        new Node(new NumberToken(0d))
+                );
 
             if (token.matches(ExpressionTokenizer.basicOperationRegex)) {
                 Operation operation = findOperation(token);
@@ -76,6 +89,20 @@ public class TokenizedExpressionParser {
         }
 
         return result;
+    }
+
+    private void evaluateAdvancedOperation(int index) {
+        try {
+//            if (tokenizedExpression.get(index + 1).charAt(0) == '(')
+//                evaluateParentheses(index + 1);
+            Double result = advancedOperations.evaluateOperation(tokenizedExpression.get(index), Double.valueOf(tokenizedExpression.get(index + 1)));
+            tokenizedExpression.remove(index);
+            tokenizedExpression.remove(index);
+            tokenizedExpression.add(index, result.toString());
+        } catch (IndexOutOfBoundsException ignore) {
+            throw new ExpressionFormatException("Improper use of function");
+        }
+
     }
 
     private Operation findOperation(String operation) {

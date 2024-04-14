@@ -6,6 +6,7 @@ import java.util.List;
 public class ExpressionTokenizer {
 
     private final String expression;
+    private final List<String> result;
 
     public static final String numberRegex = "[0-9.]";
     public static final String basicOperationRegex = "[+\\-*/^]";
@@ -13,11 +14,11 @@ public class ExpressionTokenizer {
 
     public ExpressionTokenizer(String expression) {
         this.expression = expression;
+        this.result = new ArrayList<>();
     }
 
     public List<String> tokenize() {
         StringBuilder workingToken = new StringBuilder();
-        List<String> result = new ArrayList<>();
 
         char[] expressionCharArray = expression.toCharArray();
         List<Character> expressionCharList = new ArrayList<>();
@@ -28,12 +29,11 @@ public class ExpressionTokenizer {
             Character workingCharacter = expressionCharList.get(i);
             String workingCharecterString = Character.toString(workingCharacter);
 
-            System.out.println(expressionCharList);
             if (workingCharecterString.matches(numberRegex))
                 workingToken.append(workingCharacter);
 
             if (workingCharecterString.matches(advancedOperationRegex)) {
-                addImpliedMultiplication(workingToken, result);
+                addImpliedMultiplication(workingToken);
                 result.add(parseAdvancedOperation(expressionCharList, i).toString());
                 result.add(expressionCharList.get(i).toString());
                 expressionCharList.remove(i);
@@ -48,13 +48,11 @@ public class ExpressionTokenizer {
             }
 
             if (workingCharecterString.equals("(")) {
-                addImpliedMultiplication(workingToken, result);
+                addImpliedMultiplication(workingToken);
                 StringBuilder parenthesesBuilder = parseParentheses(expressionCharList, i);
                 result.add(parenthesesBuilder.toString());
                 i--;
             }
-
-            System.out.println(expressionCharList);
 
         }
         if (!workingToken.isEmpty())
@@ -63,7 +61,7 @@ public class ExpressionTokenizer {
         return result;
     }
 
-    private void addImpliedMultiplication(StringBuilder workingToken , List<String> result) {
+    private void addImpliedMultiplication(StringBuilder workingToken) {
         if (!workingToken.isEmpty()) {
             result.add(workingToken.toString());
             result.add("*");

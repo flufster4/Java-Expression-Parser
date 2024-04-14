@@ -19,7 +19,7 @@ public class Expression {
             Node tree = parser.parse();
             tree.getToken().execute(tree.getLeft(), tree.getRight());
             return tree.getToken().value();
-        } catch (Exception e) {
+        } catch (Exception ignore) {
             throw new ExpressionFormatException("Invalid expression!");
         }
     }
