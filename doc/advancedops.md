@@ -12,6 +12,10 @@ All trigonometrical function input is in degrees, and so is the output. The curr
 ## Misc Functions
 The current supported misc functions are:
 - SQRT (square root)
+- EXP (e^x)
+- LOG (natural log)
+- LOG10 (base-10 log)
+- FACT (factorial)
 
 # Examples
 Here is a list of examples and their output:
