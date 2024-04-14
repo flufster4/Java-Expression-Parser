@@ -32,13 +32,6 @@ public class ExpressionTokenizer {
             if (workingCharecterString.matches(numberRegex))
                 workingToken.append(workingCharacter);
 
-            if (workingCharecterString.matches(advancedOperationRegex)) {
-                addImpliedMultiplication(workingToken);
-                result.add(parseAdvancedOperation(expressionCharList, i).toString());
-                result.add(expressionCharList.get(i).toString());
-                expressionCharList.remove(i);
-            }
-
             if (workingCharecterString.matches(basicOperationRegex)) {
                 if (!workingToken.isEmpty()) {
                     result.add(workingToken.toString());
@@ -51,6 +44,12 @@ public class ExpressionTokenizer {
                 addImpliedMultiplication(workingToken);
                 StringBuilder parenthesesBuilder = parseParentheses(expressionCharList, i);
                 result.add(parenthesesBuilder.toString());
+                i--;
+            }
+
+            if (workingCharecterString.matches(advancedOperationRegex)) {
+                addImpliedMultiplication(workingToken);
+                result.add(parseAdvancedOperation(expressionCharList, i).toString());
                 i--;
             }
 
@@ -105,7 +104,6 @@ public class ExpressionTokenizer {
             }
 
         } catch (IndexOutOfBoundsException ignore) {}
-
         return operationBuilder;
     }
 
