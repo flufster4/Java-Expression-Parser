@@ -3,6 +3,7 @@ package com.flufster.jep.parser.tree;
 import com.flufster.jep.Expression;
 import com.flufster.jep.ExpressionFormatException;
 import com.flufster.jep.math.Operation;
+import com.flufster.jep.parser.token.ExpressionTokenizer;
 import com.flufster.jep.parser.token.NumberToken;
 import com.flufster.jep.parser.token.OperationToken;
 
@@ -18,7 +19,6 @@ public class TokenizedExpressionParser {
 
     public Node parse() {
         Node result = null;
-        String operationRegex = "[+\\-*/^]";
 
         for (int i = 0; i < tokenizedExpression.size(); i++) {
             String token = tokenizedExpression.get(i);
@@ -33,7 +33,7 @@ public class TokenizedExpressionParser {
             if (token.charAt(0) == '(')
                 evaluateParentheses(i);
 
-            if (token.matches(operationRegex)) {
+            if (token.matches(ExpressionTokenizer.basicOperationRegex)) {
                 Operation operation = findOperation(token);
 
                 try {
