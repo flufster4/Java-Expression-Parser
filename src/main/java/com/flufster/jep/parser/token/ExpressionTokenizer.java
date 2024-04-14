@@ -28,12 +28,15 @@ public class ExpressionTokenizer {
             Character workingCharacter = expressionCharList.get(i);
             String workingCharecterString = Character.toString(workingCharacter);
 
+            System.out.println(expressionCharList);
             if (workingCharecterString.matches(numberRegex))
                 workingToken.append(workingCharacter);
 
             if (workingCharecterString.matches(advancedOperationRegex)) {
                 addImpliedMultiplication(workingToken, result);
                 result.add(parseAdvancedOperation(expressionCharList, i).toString());
+                result.add(expressionCharList.get(i).toString());
+                expressionCharList.remove(i);
             }
 
             if (workingCharecterString.matches(basicOperationRegex)) {
@@ -50,6 +53,8 @@ public class ExpressionTokenizer {
                 result.add(parenthesesBuilder.toString());
                 i--;
             }
+
+            System.out.println(expressionCharList);
 
         }
         if (!workingToken.isEmpty())
@@ -100,8 +105,6 @@ public class ExpressionTokenizer {
                 expressionCharList.remove(i);
                 workingChar = expressionCharList.get(i);
             }
-            operationBuilder.append(workingChar);
-            expressionCharList.remove(i);
 
         } catch (IndexOutOfBoundsException ignore) {}
 
