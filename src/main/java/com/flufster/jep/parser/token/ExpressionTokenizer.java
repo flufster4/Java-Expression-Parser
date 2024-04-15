@@ -75,19 +75,22 @@ public class ExpressionTokenizer {
     private StringBuilder parseParentheses(List<Character> expressionCharList, int i) {
         Character parenthesesContentCharacter = expressionCharList.get(i);
         StringBuilder parenthesesBuilder = new StringBuilder();
+        int depth = 0;
 
-        while (!parenthesesContentCharacter.equals(')')) {
+        while (true) {
+            if (parenthesesContentCharacter.equals('('))
+                depth++;
+            if (parenthesesContentCharacter.equals(')'))
+                depth--;
+
             parenthesesBuilder.append(parenthesesContentCharacter);
             expressionCharList.remove(i);
+
+            if (depth == 0)
+                break;
+
             parenthesesContentCharacter = expressionCharList.get(i);
         }
-
-        try {
-            while (expressionCharList.get(i).equals(')')) {
-                parenthesesBuilder.append(')');
-                expressionCharList.remove(i);
-            }
-        } catch (IndexOutOfBoundsException ignore) {}
 
         return parenthesesBuilder;
     }
