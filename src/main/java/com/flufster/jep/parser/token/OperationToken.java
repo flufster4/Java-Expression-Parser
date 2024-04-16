@@ -2,7 +2,6 @@ package com.flufster.jep.parser.token;
 
 import com.flufster.jep.math.Operation;
 import com.flufster.jep.parser.tree.Node;
-import org.jetbrains.annotations.Nullable;
 
 public class OperationToken implements Token {
 
@@ -14,14 +13,14 @@ public class OperationToken implements Token {
     }
 
     @Override
-    public void execute(@Nullable Node left, @Nullable Node right) {
+    public void execute(Node left, Node right) {
         if (left == null || right == null) throw new ArithmeticException("Operation requires two operands.");
 
         //evaluate left and right nodes
-        left.getToken().execute(left.getLeft(), left.getRight());
-        right.getToken().execute(right.getLeft(), right.getRight());
-        Double x = left.getToken().value();
-        Double y = right.getToken().value();
+        left.token.execute(left.left, left.left);
+        right.token.execute(right.left, right.right);
+        Double x = left.token.value();
+        Double y = right.token.value();
 
         //calculate result
         switch (operation) {

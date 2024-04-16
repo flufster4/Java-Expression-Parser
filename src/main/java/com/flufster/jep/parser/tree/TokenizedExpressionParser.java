@@ -60,9 +60,9 @@ public class TokenizedExpressionParser {
                         evaluateParentheses(i + 3);
 
                     Operation secondOperation = findOperation(tokenizedExpression.get(i + 2));
-                    if (secondOperation.getPriority() > operation.getPriority()) {
+                    if (secondOperation.priority > operation.priority) {
                         try {
-                            if (findOperation(tokenizedExpression.get(i + 4)).getPriority() > secondOperation.getPriority())
+                            if (findOperation(tokenizedExpression.get(i + 4)).priority > secondOperation.priority)
                                 solveHigherOperation(i + 4);
                         } catch (IndexOutOfBoundsException ignore) {}
                         solveHigherOperation(i + 2);
@@ -110,7 +110,7 @@ public class TokenizedExpressionParser {
 
     private Operation findOperation(String operation) {
         for (Operation op : Operation.values())
-            if (op.getOperation().equals(operation))
+            if (op.operation.equals(operation))
                 return op;
         return Operation.ADDITION;
     }
@@ -142,12 +142,12 @@ public class TokenizedExpressionParser {
                 new Node(new NumberToken(op1)),
                 new Node(new NumberToken(op2))
         );
-        resultNode.getToken().execute(resultNode.getLeft(), resultNode.getRight());
+        resultNode.token.execute(resultNode.left, resultNode.right);
 
         int op1Location = operationIndex - 1;
         tokenizedExpression.remove(op1Location);
         tokenizedExpression.remove(op1Location);
         tokenizedExpression.remove(op1Location);
-        tokenizedExpression.add(op1Location, resultNode.getToken().value().toString());
+        tokenizedExpression.add(op1Location, resultNode.token.value().toString());
     }
 }

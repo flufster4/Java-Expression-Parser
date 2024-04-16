@@ -17,8 +17,8 @@ public class Expression {
         try {
             TokenizedExpressionParser parser = new TokenizedExpressionParser(tokenizer.tokenize());
             Node tree = parser.parse();
-            tree.getToken().execute(tree.getLeft(), tree.getRight());
-            return tree.getToken().value();
+            tree.token.execute(tree.left, tree.right);
+            return tree.token.value();
         } catch (Exception ignore) {
             throw new ExpressionFormatException("Invalid expression!");
         }

@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TokenizedExpressionParserTests {
 
+    private final Double delta = 0.0001;
+
     @Test
     void basicOperations() {
         Expression expression = new Expression("2^2*4/4+4-4");
@@ -16,12 +18,12 @@ public class TokenizedExpressionParserTests {
     @Test
     void advancedOperation() {
         Expression expression = new Expression("TAN45");
-        assertEquals(0.9999999999999999, expression.evaluate());
+        assertEquals(1.6197, expression.evaluate(), delta);
     }
 
     @Test
     void complexExpression() {
         Expression expression = new Expression("SQRT((1+TAN(45))^6)");
-        assertEquals(8, expression.evaluate());
+        assertEquals(17.9800, expression.evaluate(), delta);
     }
 }

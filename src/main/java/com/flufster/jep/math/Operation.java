@@ -1,8 +1,5 @@
 package com.flufster.jep.math;
 
-import lombok.Getter;
-
-@Getter
 public enum Operation {
 
     ADDITION(0, "+"),
@@ -11,8 +8,8 @@ public enum Operation {
     DIVISION(1, "/"),
     EXPONENT(2, "^");
 
-    private final int priority;
-    private final String operation;
+    public final int priority;
+    public final String operation;
 
     Operation(int priority, String operation) {
         this.priority = priority;
