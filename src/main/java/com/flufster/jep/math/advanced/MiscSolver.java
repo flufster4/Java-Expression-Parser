@@ -7,7 +7,7 @@ import java.util.Optional;
 public class MiscSolver implements AdvancedOperationSolver {
 
     @Override
-    public Optional<Double> evaluate(String operation , Double operand) {
+    public Optional<Double> evaluate(String operation, Double operand) {
         return switch (operation) {
             case "SQRT" -> Optional.of(Math.sqrt(operand));
             case "EXP" -> Optional.of(Math.exp(operand));
