@@ -20,7 +20,8 @@ public class AdvancedOperations {
                 .orElse(0d);
     }
 
-    public AdvancedOperations() {
+    public AdvancedOperations(AdvancedOperationSolver customSolver) {
+        solvers.add(customSolver);
         solvers.add(new TrigSolver());
         solvers.add(new MiscSolver());
     }

@@ -8,16 +8,27 @@ import com.flufster.jep.parser.token.ExpressionTokenizer;
 import com.flufster.jep.parser.token.NumberToken;
 import com.flufster.jep.parser.token.OperationToken;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class TokenizedExpressionParser {
 
     private final List<String> tokenizedExpression;
     private final AdvancedOperations advancedOperations;
+    private final HashMap<String, Expression> functionMap;
 
-    public TokenizedExpressionParser(List<String> tokenizedExpression) {
+    public TokenizedExpressionParser(List<String> tokenizedExpression, HashMap<String, Expression> functionMap) {
         this.tokenizedExpression = tokenizedExpression;
-        this.advancedOperations = new AdvancedOperations();
+        this.functionMap = functionMap;
+        this.advancedOperations = new AdvancedOperations((operation, operand) -> {
+            for (String key : functionMap.keySet())
+                if (key.equals(operation))
+                    return Optional.of(functionMap.get(key)
+                            .variable('x', operand)
+                            .evaluate());
+            return Optional.empty();
+        });
     }
 
     public Node parse() {
@@ -123,7 +134,8 @@ public class TokenizedExpressionParser {
         parentheses = parentheses.substring(1);
         parentheses = parentheses.substring(0, parentheses.length() - 1);
 
-        Expression parenthesesExpression = new Expression(parentheses);
+        Expression parenthesesExpression = new Expression(parentheses)
+                .functionMap(functionMap);
         return parenthesesExpression.evaluate();
     }
 
