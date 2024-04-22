@@ -27,7 +27,7 @@ JEP provides both built-in functions and an API to create custom ones. For a bui
 The custom function API is very similar to the variable one. The function API provides two methods, `Expression#function`
 and `Expression#functionMap`. The first takes a `String` as its first parameter, and an `Expression` as the second. The
 String is the identifier of the function, and is what will be used to call it. The name has to be fully capitalized and
-can be as short or long as you want. The second parameter is an 'Expression' object that will parse the function. The parameter 
+can be as short or long as you want. The second parameter is an `Expression` object that will parse the function. The parameter 
 of the function will be passed into the expression as the `x` variable. The second method, `Expression#functionsMap` is
 almost identical to `Expression#variableMap`, except it takes a `HashMap<String, Expression>` as its input instead. Here
 is an example:
