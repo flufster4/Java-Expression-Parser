@@ -2,7 +2,7 @@
 JEP allows for easy use and reuse of expression strings with variables. Variables can only be a single 
 character (e.g. 'x' is allowed but 'pi' isn't), and have to be lowercase. They can be assigned using a builder like
 API found on the `Expression` class. The methods of interest to do this are `Expression#variable` and `Expression#variableMap`.
-The first function takes two parameters. The first parameter is of type `Charecter`, and it is the character to associate 
+The first function takes two parameters. The first parameter is of type `Character`, and it is the character to associate 
 a value too. The second function is of type `Double`, and it is the value that is to be associated with the character.
 The second function, `Expression#variableMap`, takes a `HashMap<Character, Double>`. The key of the HashMap is the variable
 character, and the value is the variable's value. Variables support implied multiplication. Here are some examples:
