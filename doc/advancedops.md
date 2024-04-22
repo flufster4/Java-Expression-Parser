@@ -1,4 +1,5 @@
 # Advanced Operations/Functions
+For a custom function guide, refer to [here](variablefunctiondoc.md).
 Java expression parser supports mathematical functions and other "advanced" operations. To use them is quite simple,
 just include the name of the function in your expression. Please note that **all function names must be in all caps**.
 All functions can have their input be either in parentheses (``SIN(29+1)``), or without (``SIN30``). 
