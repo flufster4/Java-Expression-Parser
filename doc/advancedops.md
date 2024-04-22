@@ -4,7 +4,7 @@ just include the name of the function in your expression. Please note that **all
 All functions can have their input be either in parentheses (``SIN(29+1)``), or without (``SIN30``). 
 
 ## Trigonometry
-All trigonometrical function input is in radians, and so is the output. The current supported trigonometrical function are:
+All trigonometrical function inputs are in radians, and so is the output. The current supported trigonometrical function are:
 - SIN and ARCSIN
 - COS and ARCCOS
 - TAN and ARCTAN

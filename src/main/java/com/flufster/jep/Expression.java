@@ -56,7 +56,7 @@ public class Expression implements Comparable<Expression> {
 
     /**
      * Creates a character in the expression with a value. Implied
-     * multiplication is supported, and will automatically be added.
+     * multiplication is supported and will automatically be added.
      *
      * @param variable The character to be associated with a value.
      * @param value The value that is to be associated with the variable.
@@ -80,7 +80,7 @@ public class Expression implements Comparable<Expression> {
     }
 
     /**
-     * Associates a function with an all uppercase name, to an expression that evaluates it.
+     * Associates a function with an uppercase name, to an expression that evaluates it.
      * The operand of the function will be associated with the variable {@code x}
      * in the {@code Expression} object.
      *
