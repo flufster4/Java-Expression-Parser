@@ -67,6 +67,9 @@ public class TokenizedExpressionParser {
                     if (((Character)tokenizedExpression.get(i + 1).charAt(0)).toString().matches(ExpressionTokenizer.advancedOperationRegex))
                         evaluateAdvancedOperation(i + 1);
 
+                    if (((Character)tokenizedExpression.get(i + 3).charAt(0)).toString().matches(ExpressionTokenizer.advancedOperationRegex))
+                        evaluateAdvancedOperation(i + 3);
+
                     if (tokenizedExpression.get(i + 3).charAt(0) == '(')
                         evaluateParentheses(i + 3);
 

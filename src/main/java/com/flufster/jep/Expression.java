@@ -110,14 +110,18 @@ public class Expression implements Comparable<Expression> {
             int variableIndex = expression.indexOf(key);
             String replacement = variableMap.get(key).toString();
 
-            if (variableIndex > 0)
-                try {
-                    if (((Character) expression.charAt(variableIndex - 1)).toString().matches("[0-9)]"))
-                        replacement = "*" + replacement;
-                    if (((Character) expression.charAt(variableIndex + 1)).toString().matches("[0-9(A-Z]"))
-                        replacement = replacement + "*";
-                } catch (IndexOutOfBoundsException ignore) {}
+            if (!expression.isEmpty()) {
+                if (variableIndex > 0
+                        && (Character.isDigit(expression.charAt(variableIndex - 1))
+                        || expression.charAt(variableIndex - 1) == ')'))
+                    replacement = "*" + replacement;
 
+                if (variableIndex < expression.length() - 1
+                        && (Character.isDigit(expression.charAt(variableIndex + 1))
+                        || expression.charAt(variableIndex + 1) == '('
+                        || Character.isUpperCase(expression.charAt(variableIndex + 1))))
+                    replacement = replacement + "*";
+            }
             expression = expression.replace(key.toString(), replacement);
         }
     }
