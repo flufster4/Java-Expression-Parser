@@ -22,7 +22,7 @@ Expression expression = new Expression("SQRT(a^2+b^2)")
     .variable('a', 2d)
     .variable('b', 3d);
 Double c = expression.evaluate();
-System.out.println(result); //Prints 3.61
+System.out.println(c); //Prints 3.61
 ```
 For more documentation regarding the variable and function system, please refer [here](doc/variablefunctiondoc.md)
 ## Operations
